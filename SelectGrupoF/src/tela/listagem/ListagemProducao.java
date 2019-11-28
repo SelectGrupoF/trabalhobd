@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package tela.listagem;
+import controlador.ControladorProducao;
+import tela.manutencao.ManutencaoProducao;
 
 /**
  *
@@ -17,6 +19,7 @@ public class ListagemProducao extends javax.swing.JDialog {
     public ListagemProducao(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        ControladorProducao.atualizarTabela(tabela);
     }
 
     /**
@@ -29,17 +32,17 @@ public class ListagemProducao extends javax.swing.JDialog {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        tabela = new javax.swing.JTable();
+        btnNovo = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jTable1.setBackground(new java.awt.Color(0, 153, 153));
-        jTable1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jTable1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jTable1.setForeground(new java.awt.Color(255, 255, 255));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabela.setBackground(new java.awt.Color(0, 153, 153));
+        tabela.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        tabela.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        tabela.setForeground(new java.awt.Color(255, 255, 255));
+        tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -50,12 +53,22 @@ public class ListagemProducao extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        tabela.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tabelaMousePressed(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tabela);
 
-        jButton1.setBackground(new java.awt.Color(0, 153, 153));
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("NOVO");
+        btnNovo.setBackground(new java.awt.Color(0, 153, 153));
+        btnNovo.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnNovo.setForeground(new java.awt.Color(255, 255, 255));
+        btnNovo.setText("NOVO");
+        btnNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNovoActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Staccato222 BT", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 153, 153));
@@ -69,7 +82,7 @@ public class ListagemProducao extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(164, 164, 164)
-                        .addComponent(jButton1))
+                        .addComponent(btnNovo))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(59, 59, 59)
                         .addComponent(jLabel1))
@@ -86,12 +99,29 @@ public class ListagemProducao extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(btnNovo)
                 .addGap(9, 9, 9))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
+ManutencaoProducao manutencao = new ManutencaoProducao(null, true, this);
+manutencao.setVisible(true);        // TODO add your handling code here:
+    }//GEN-LAST:event_btnNovoActionPerformed
+
+    private void tabelaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMousePressed
+if (evt.getClickCount() == 2) {
+            //obtem a linha selecionada
+            int linhaSelecionada = tabela.getSelectedRow();
+            //obtém a chave primária
+            int pk = Integer.parseInt(tabela.getValueAt(linhaSelecionada, 0).toString()); //pk está na coluna 0
+            //abre a manutenção
+            ManutencaoProducao manutencao = new ManutencaoProducao(null, true, this, pk);
+            manutencao.setVisible(true);
+}        // TODO add your handling code here:
+    }//GEN-LAST:event_tabelaMousePressed
 
     /**
      * @param args the command line arguments
@@ -136,9 +166,9 @@ public class ListagemProducao extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnNovo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    public javax.swing.JTable tabela;
     // End of variables declaration//GEN-END:variables
 }
