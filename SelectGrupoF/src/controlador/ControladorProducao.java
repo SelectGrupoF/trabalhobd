@@ -30,7 +30,7 @@ public class ControladorProducao {
         objeto.setData(LocalDate.parse(man.jtfData.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy")));
         objeto.setTotal(Integer.parseInt(man.jtfTotal.getText()));
         objeto.setObs(man.jtfObs.getText());
-        objeto.setCod_pessoa((Cod_pessoa)man.jcbCod_pessoa.getSelectedItem());
+        
         
         boolean resultado = DaoProducao.inserir(objeto);
         if (resultado) {
@@ -52,7 +52,7 @@ man.dispose();//fechar a tela da manutenção
         objeto.setData(LocalDate.parse(man.jtfData.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy")));
         objeto.setTotal(Integer.parseInt(man.jtfTotal.getText()));
         objeto.setObs(man.jtfObs.getText());
-        objeto.setCod_pessoa((Cod_pessoa)man.jcbCod_pessoa.getSelectedItem());
+        
         
         boolean resultado = DaoProducao.alterar(objeto);
         if (resultado) {
@@ -113,13 +113,9 @@ public static void atualizarTabela(JTable tabela) {
         man.jtfData.setText(objeto.getData().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
         man.jtfTotal.setText(objeto.getTotal().toString());
         man.jtfObs.setText(objeto.getObs());
-        man.jcbCod_pessoa.setSelectedItem(objeto.getCod_pessoa());
+        
         
         man.jtfCodigo.setEnabled(false); //desabilitando o campo código
         man.btnAdicionar.setEnabled(false); //desabilitando o botão adicionar
     }
-    public static void atualizaComboCod_pessoa(ManutencaoProducao man) {
-        DefaultComboBoxModel defaultComboBoxModel = new DefaultComboBoxModel(DaoCod_pessoa.consultar().toArray());
-        man.jcbCod_pessoa.setModel(defaultComboBoxModel);
-}
 }

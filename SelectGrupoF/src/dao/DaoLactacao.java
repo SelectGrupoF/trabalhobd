@@ -4,33 +4,31 @@
  * and open the template in the editor.
  */
 package dao;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
-import modelo.Producao;
-import java.sql.Date;
-import java.time.format.DateTimeFormatter;
-import java.time.LocalDate;
+import modelo.Lactacao;
 import java.sql.ResultSet;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-
 
 /**
  *
  * @author Clovis
  */
-public class DaoProducao {
-    public static boolean inserir(Producao objeto) {
-        String sql = "INSERT INTO producao (codigo, turno, data, total, obs, cod_pessoa) VALUES (?, ?, ?, ?, ?, ?)";
+public class DaoLactacao {
+    public static boolean inserir(Lactacao objeto) {
+        String sql = "INSERT INTO lactacao (codigo, inicio, fim, obser) VALUES (?, ?, ?, ?)";
         try {
             PreparedStatement ps = conexao.Conexao.getConexao().prepareStatement(sql);
             ps.setInt(1, objeto.getCodigo());
-            ps.setInt(2, objeto.getTurno());
-            ps.setDate(3, Date.valueOf(objeto.getData()));
-            ps.setInt(4, objeto.getTotal());
-            ps.setString(5, objeto.getObs());
-            ps.setInt(6, objeto.getCod_pessoa());
+            ps.setDate(2, Date.valueOf(objeto.getInicio())); //fazer a seguinte importação: java.sql.Date
+            ps.setDate(3, Date.valueOf(objeto.getFim())); //fazer a seguinte importação: java.sql.Date 
+            ps.setString(4, objeto.getObser());
+            
             ps.executeUpdate();
             return true;
         } catch (SQLException | ClassNotFoundException ex) {
@@ -39,15 +37,11 @@ public class DaoProducao {
         }
     }
     public static void main(String[] args) {
-        Producao objeto = new Producao();
-        objeto.setCodigo(1);
-        objeto.setTurno(1);
-        objeto.setData(LocalDate.parse("11/01/1988", DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-        objeto.setTotal(10);
-        objeto.setObs("a");
-        
-    
-        
+        Lactacao objeto = new Lactacao();
+        objeto.setCodigo(15);
+        objeto.setInicio(LocalDate.parse("11/01/1988", DateTimeFormatter.ofPattern("dd/MM/yyyy"))); //fazer as seguintes importações: java.time.format.DateTimeFormatter e java.time.LocalDate
+        objeto.setFim(LocalDate.parse("11/01/1988", DateTimeFormatter.ofPattern("dd/MM/yyyy"))); //fazer as seguintes importações: java.time.format.DateTimeFormatter e java.time.LocalDate
+        objeto.setObser("Luiza");
         
         boolean resultado = inserir(objeto);
         if (resultado) {
@@ -56,16 +50,14 @@ public class DaoProducao {
             JOptionPane.showMessageDialog(null, "Erro!");
         }
     }
-    public static boolean alterar(Producao objeto) {
-        String sql = "UPDATE producao SET turno = ?, data = ?, total = ?, obs = ?, cod_pessoa = ? WHERE codigo=?";
+    public static boolean alterar(Lactacao objeto) {
+        String sql = "UPDATE lactacao SET inicio = ?, fim = ?, obser = ? WHERE codigo=?";
         try {
             PreparedStatement ps = conexao.Conexao.getConexao().prepareStatement(sql);
-            ps.setInt(1, objeto.getTurno());
-            ps.setDate(2, Date.valueOf(objeto.getData()));
-            ps.setInt(3, objeto.getTotal());
-            ps.setString(4, objeto.getObs());
-            ps.setInt(5, objeto.getCod_pessoa());
-            ps.setInt(6, objeto.getCodigo());
+            ps.setDate(1, Date.valueOf(objeto.getInicio())); //fazer a seguinte importação: java.sql.Date 
+            ps.setDate(2, Date.valueOf(objeto.getFim())); //fazer a seguinte importação: java.sql.Date 
+            ps.setString(3, objeto.getObser());
+           
             ps.executeUpdate();
             return true;
         } catch (SQLException | ClassNotFoundException ex) {
@@ -73,8 +65,8 @@ public class DaoProducao {
             return false;
         }
     }
-     public static boolean excluir(Producao objeto) {
-        String sql = "DELETE FROM producao WHERE codigo=?";
+    public static boolean excluir(Lactacao objeto) {
+        String sql = "DELETE FROM lactacao WHERE codigo=?";
         try {
             PreparedStatement ps = conexao.Conexao.getConexao().prepareStatement(sql);
             ps.setInt(1, objeto.getCodigo());
@@ -85,23 +77,21 @@ public class DaoProducao {
             return false;
         }
     }
-     public static List<Producao> consultar() {
-        List<Producao> resultados = new ArrayList<>();
+    public static List<Lactacao> consultar() {
+        List<Lactacao> resultados = new ArrayList<>();
         //editar o SQL conforme a entidade
-        String sql = "SELECT codigo, turno, data, total, obs, cod_pessoa FROM producao";
+        String sql = "SELECT codigo, inicio, fim, obser FROM lactacao";
         PreparedStatement ps;
         try {
             ps = conexao.Conexao.getConexao().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                Producao objeto = new Producao();
+                Lactacao objeto = new Lactacao();
                 //definir um set para cada atributo da entidade, cuidado com o tipo
                 objeto.setCodigo(rs.getInt("codigo"));
-                objeto.setTurno(rs.getInt("turno"));
-                objeto.setData(rs.getDate("data").toLocalDate());
-                objeto.setTotal(rs.getInt("total"));
-                objeto.setObs(rs.getString("obs"));
-               
+                objeto.setInicio(rs.getDate("inicio").toLocalDate());
+                objeto.setFim(rs.getDate("Fim").toLocalDate());
+                objeto.setObser(rs.getString("obser"));
                 
                 resultados.add(objeto);//não mexa nesse, ele adiciona o objeto na lista
             }
@@ -111,23 +101,21 @@ public class DaoProducao {
             return null;
         }
 }
-     public static Producao consultar(int primaryKey) {
+    public static Lactacao consultar(int primaryKey) {
         //editar o SQL conforme a entidade
-        String sql = "SELECT codigo, turno, data, total, obs, cod_pessoa FROM producao WHERE codigo=?";
+        String sql = "SELECT codigo, inicio, fim, obser FROM lactacao WHERE codigo=?";
         PreparedStatement ps;
         try {
             ps = conexao.Conexao.getConexao().prepareStatement(sql);
             ps.setInt(1, primaryKey);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                Producao objeto = new Producao();
+                Lactacao objeto = new Lactacao();
                 //definir um set para cada atributo da entidade, cuidado com o tipo
                 objeto.setCodigo(rs.getInt("codigo"));
-                objeto.setTurno(rs.getInt("turno"));
-                objeto.setData(rs.getDate("data").toLocalDate());
-                objeto.setTotal(rs.getInt("total"));
-                objeto.setObs(rs.getString("obs"));
-                
+                objeto.setInicio(rs.getDate("inicio").toLocalDate());
+                objeto.setFim(rs.getDate("fim").toLocalDate());
+                objeto.setObser(rs.getString("obser"));
                 
                 return objeto;//não mexa nesse, ele adiciona o objeto na lista
             }

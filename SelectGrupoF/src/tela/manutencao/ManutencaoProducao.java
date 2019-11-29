@@ -29,7 +29,6 @@ public ListagemProducao listagem;
         
         jtfCodigo.setEnabled(false);  //desabilitando a edição do campo código
         this.listagem = listagem;
-        controlador.ControladorProducao.atualizaComboCod_pessoa(this); //no construtor com 3 parâmetros adicionar antes do atualizarCampos
         controlador.ControladorProducao.atualizaCampos(this, pk);//pegando os valores do BD e colocando na tela
     }
     /**
