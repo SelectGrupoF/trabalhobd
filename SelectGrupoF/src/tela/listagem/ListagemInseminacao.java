@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package tela.listagem;
-
+import tela.manutencao.ManutencaoInseminacao;
 /**
  *
  * @author Evelin
@@ -29,17 +29,17 @@ public class ListagemInseminacao extends javax.swing.JDialog {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabela = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jTable1.setBackground(new java.awt.Color(0, 153, 153));
-        jTable1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jTable1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jTable1.setForeground(new java.awt.Color(255, 255, 255));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabela.setBackground(new java.awt.Color(0, 153, 153));
+        tabela.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        tabela.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        tabela.setForeground(new java.awt.Color(255, 255, 255));
+        tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -50,7 +50,12 @@ public class ListagemInseminacao extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        tabela.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tabelaMousePressed(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tabela);
 
         jButton1.setBackground(new java.awt.Color(0, 153, 153));
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -98,8 +103,20 @@ public class ListagemInseminacao extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+ManutencaoInseminacao manutencao = new ManutencaoInseminacao(null, true, this);
+manutencao.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void tabelaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMousePressed
+if (evt.getClickCount() == 2) {
+            //obtem a linha selecionada
+            int linhaSelecionada = tabela.getSelectedRow();
+            //obtém a chave primária
+            int pk = Integer.parseInt(tabela.getValueAt(linhaSelecionada, 0).toString()); //pk está na coluna 0
+            //abre a manutenção
+ 
+}        // TODO add your handling code here:
+    }//GEN-LAST:event_tabelaMousePressed
 
     /**
      * @param args the command line arguments
@@ -147,6 +164,6 @@ public class ListagemInseminacao extends javax.swing.JDialog {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    public javax.swing.JTable tabela;
     // End of variables declaration//GEN-END:variables
 }
