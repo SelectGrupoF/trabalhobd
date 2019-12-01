@@ -22,15 +22,15 @@ import java.util.List;
  */
 public class DaoProducao {
     public static boolean inserir(Producao objeto) {
-        String sql = "INSERT INTO producao (codigo, turno, data, total, obs, cod_pessoa) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO producao (codigo, turno, data, total, obse, cod_pessoa) VALUES (?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement ps = conexao.Conexao.getConexao().prepareStatement(sql);
             ps.setInt(1, objeto.getCodigo());
             ps.setInt(2, objeto.getTurno());
             ps.setDate(3, Date.valueOf(objeto.getData()));
             ps.setInt(4, objeto.getTotal());
-            ps.setString(5, objeto.getObs());
-            ps.setInt(6, objeto.getCod_pessoa());
+            ps.setString(5, objeto.getObse());
+            ps.setInt(6, objeto.getCod_pessoa().getCodigo());
             ps.executeUpdate();
             return true;
         } catch (SQLException | ClassNotFoundException ex) {
@@ -44,8 +44,10 @@ public class DaoProducao {
         objeto.setTurno(1);
         objeto.setData(LocalDate.parse("11/01/1988", DateTimeFormatter.ofPattern("dd/MM/yyyy")));
         objeto.setTotal(10);
-        objeto.setObs("a");
-        
+        objeto.setObse("a");
+        Pessoa novoObj = new Pessoa();
+novoObj.setCodigo(2); //deve ser um valor de chave primária que já está cadastrado no BD
+objeto.setCod_pessoa(novoObj);
     
         
         
@@ -57,14 +59,14 @@ public class DaoProducao {
         }
     }
     public static boolean alterar(Producao objeto) {
-        String sql = "UPDATE producao SET turno = ?, data = ?, total = ?, obs = ?, cod_pessoa = ? WHERE codigo=?";
+        String sql = "UPDATE producao SET turno = ?, data = ?, total = ?, obse = ?, cod_pessoa = ? WHERE codigo=?";
         try {
             PreparedStatement ps = conexao.Conexao.getConexao().prepareStatement(sql);
             ps.setInt(1, objeto.getTurno());
             ps.setDate(2, Date.valueOf(objeto.getData()));
             ps.setInt(3, objeto.getTotal());
-            ps.setString(4, objeto.getObs());
-            ps.setInt(5, objeto.getCod_pessoa());
+            ps.setString(4, objeto.getObse());
+            ps.setInt(5, objeto.getCod_pessoa().getCodigo());
             ps.setInt(6, objeto.getCodigo());
             ps.executeUpdate();
             return true;
@@ -88,7 +90,7 @@ public class DaoProducao {
      public static List<Producao> consultar() {
         List<Producao> resultados = new ArrayList<>();
         //editar o SQL conforme a entidade
-        String sql = "SELECT codigo, turno, data, total, obs, cod_pessoa FROM producao";
+        String sql = "SELECT codigo, turno, data, total, obse, cod_pessoa FROM producao";
         PreparedStatement ps;
         try {
             ps = conexao.Conexao.getConexao().prepareStatement(sql);
@@ -100,7 +102,8 @@ public class DaoProducao {
                 objeto.setTurno(rs.getInt("turno"));
                 objeto.setData(rs.getDate("data").toLocalDate());
                 objeto.setTotal(rs.getInt("total"));
-                objeto.setObs(rs.getString("obs"));
+                objeto.setObse(rs.getString("obs"));
+                objeto.setCod_pessoa(DaoPessoa.consultar(rs.getInt("cod_pessoa"))); //tem que importar DaoTipoProduto
                
                 
                 resultados.add(objeto);//não mexa nesse, ele adiciona o objeto na lista
@@ -113,7 +116,7 @@ public class DaoProducao {
 }
      public static Producao consultar(int primaryKey) {
         //editar o SQL conforme a entidade
-        String sql = "SELECT codigo, turno, data, total, obs, cod_pessoa FROM producao WHERE codigo=?";
+        String sql = "SELECT codigo, turno, data, total, obse, cod_pessoa FROM producao WHERE codigo=?";
         PreparedStatement ps;
         try {
             ps = conexao.Conexao.getConexao().prepareStatement(sql);
@@ -126,7 +129,8 @@ public class DaoProducao {
                 objeto.setTurno(rs.getInt("turno"));
                 objeto.setData(rs.getDate("data").toLocalDate());
                 objeto.setTotal(rs.getInt("total"));
-                objeto.setObs(rs.getString("obs"));
+                objeto.setObse(rs.getString("obs"));
+                objeto.setCod_pessoa(DaoPessoa.consultar(rs.getInt("cod_pessoa")));
                 
                 
                 return objeto;//não mexa nesse, ele adiciona o objeto na lista

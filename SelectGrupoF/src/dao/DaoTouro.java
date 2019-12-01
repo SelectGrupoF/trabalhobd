@@ -11,19 +11,19 @@ import modelo.Touro;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-
+import dao.DaoRaca;
 /**
  *
  * @author Clovis
  */
 public class DaoTouro {
     public static boolean inserir(Touro objeto) {
-        String sql = "INSERT INTO raca (codigo, nome, cod_raca) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO touro (codigo, nome, cod_raca) VALUES (?, ?, ?)";
         try {
             PreparedStatement ps = conexao.Conexao.getConexao().prepareStatement(sql);
             ps.setInt(1, objeto.getCodigo());
             ps.setString(2, objeto.getNome());
-            ps.setInt(3, objeto.getCod_raca());
+            ps.setInt(3, objeto.getCod_raca().getCodigo());
             
             ps.executeUpdate();
             return true;
@@ -34,9 +34,11 @@ public class DaoTouro {
     }
     public static void main(String[] args) {
         Touro objeto = new Touro();
-        objeto.setCodigo(15);
+        objeto.setCodigo(2);
         objeto.setNome("Luiza");
-        objeto.setCod_raca(1);
+        Raca novoObj = new Raca();
+        novoObj.setCodigo(2); //deve ser um valor de chave primária que já está cadastrado no BD
+        objeto.setCod_raca(novoObj);
         
         
         boolean resultado = inserir(objeto);
@@ -47,11 +49,11 @@ public class DaoTouro {
         }
     }
     public static boolean alterar(Touro objeto) {
-        String sql = "UPDATE raca SET nome = ? WHERE codigo=?";
+        String sql = "UPDATE touro SET nome = ?, cod_raca=? WHERE codigo=?";
         try {
             PreparedStatement ps = conexao.Conexao.getConexao().prepareStatement(sql);
             ps.setString(1, objeto.getNome()); 
-            ps.setInt(2, objeto.getCod_raca());
+            ps.setInt(2, objeto.getCod_raca().getCodigo());
             ps.setInt(3, objeto.getCodigo());
             
             ps.executeUpdate();
@@ -86,7 +88,7 @@ public class DaoTouro {
                 //definir um set para cada atributo da entidade, cuidado com o tipo
                 objeto.setCodigo(rs.getInt("codigo"));
                 objeto.setNome(rs.getString("nome"));
-                objeto.setCod_raca(rs.getInt("cod_raca"));
+                objeto.setCod_raca(DaoRaca.consultar(rs.getInt("cod_raca"))); //tem que importar DaoTipoProduto
               
                 
                 resultados.add(objeto);//não mexa nesse, ele adiciona o objeto na lista
@@ -99,7 +101,7 @@ public class DaoTouro {
 }
     public static Touro consultar(int primaryKey) {
         //editar o SQL conforme a entidade
-        String sql = "SELECT codigo, nome,cod_raca FROM touro WHERE codigo=?";
+        String sql = "SELECT codigo, nome, cod_raca FROM touro WHERE codigo=?";
         PreparedStatement ps;
         try {
             ps = conexao.Conexao.getConexao().prepareStatement(sql);
@@ -110,7 +112,7 @@ public class DaoTouro {
                 //definir um set para cada atributo da entidade, cuidado com o tipo
                 objeto.setCodigo(rs.getInt("codigo"));
                 objeto.setNome(rs.getString("nome"));
-                objeto.setCod_raca(rs.getInt("cod_raca"));
+                objeto.setCod_raca(DaoRaca.consultar(rs.getInt("cod_raca")));
                 
                 return objeto;//não mexa nesse, ele adiciona o objeto na lista
             }

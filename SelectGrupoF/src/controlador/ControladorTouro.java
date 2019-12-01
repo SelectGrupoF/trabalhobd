@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Vector;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-
 import tela.manutencao.ManutencaoTouro;
 
 /**
@@ -27,7 +26,7 @@ public class ControladorTouro {
         Touro objeto = new Touro();
         objeto.setCodigo(Integer.parseInt(man.jtfCodigo.getText()));
         objeto.setNome(man.jtfNome.getText());
-        objeto.setCod_raca(Integer.parseInt(man.jtfCod_raca.getText()));
+        objeto.setCod_raca((Raca)man.jcbCod_raca.getSelectedItem());
         
         boolean resultado = DaoTouro.inserir(objeto);
         if (resultado) {
@@ -46,8 +45,8 @@ man.dispose();//fechar a tela da manutenção
         //definir todos os atributos
         objeto.setCodigo(Integer.parseInt(man.jtfCodigo.getText()));   
         objeto.setNome(man.jtfNome.getText());
+        objeto.setCod_raca((Raca)man.jcbCod_raca.getSelectedItem());
         
-        objeto.setCod_raca(Integer.parseInt(man.jtfCod_raca.getText()));
         
         
         boolean resultado = DaoTouro.alterar(objeto);
@@ -92,6 +91,7 @@ public static void atualizarTabela(JTable tabela) {
             linha.add(objeto.getCodigo());
             linha.add(objeto.getNome());
             linha.add(objeto.getCod_raca());
+       
           
             modelo.addRow(linha); //adicionando a linha na tabela
         }
@@ -102,10 +102,14 @@ public static void atualizarTabela(JTable tabela) {
         //Definindo os valores do campo na tela (um para cada atributo/campo)
         man.jtfCodigo.setText(objeto.getCodigo().toString());
         man.jtfNome.setText(objeto.getNome());
-        man.jtfCod_raca.setText(objeto.getCod_raca().toString());
-        
-        
+        man.jcbCod_raca.setSelectedItem(objeto.getCod_raca());
         man.jtfCodigo.setEnabled(false); //desabilitando o campo código
         man.btnAdicionar.setEnabled(false); //desabilitando o botão adicionar
     }
+        
+    public static void atualizaComboCod_raca(ManutencaoTouro man) {
+        DefaultComboBoxModel defaultComboBoxModel = new DefaultComboBoxModel(DaoRaca.consultar().toArray());
+        man.jcbCod_raca.setModel(defaultComboBoxModel);
+}
+        
 }

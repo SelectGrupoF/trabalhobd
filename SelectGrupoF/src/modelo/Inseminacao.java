@@ -6,6 +6,7 @@
 package modelo;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  *
@@ -15,7 +16,7 @@ public class Inseminacao {
      private Integer codigo;
     private Integer situacao;
     private String observo;
-    private Integer cod_touro;
+    private Touro cod_touro;
     private LocalDate datai; //é necessário fazer a seguinte importação: java.time.LocalDate;
     private LocalDate datap; //é necessário fazer a seguinte importação: java.time.LocalDate;
 
@@ -43,11 +44,11 @@ public class Inseminacao {
         this.observo = observo;
     }
 
-    public Integer getCod_touro() {
+    public Touro getCod_touro() {
         return cod_touro;
     }
 
-    public void setCod_touro(Integer cod_touro) {
+    public void setCod_touro(Touro cod_touro) {
         this.cod_touro = cod_touro;
     }
 
@@ -71,5 +72,32 @@ public class Inseminacao {
     public String toString() {
         return "ControladorInseminacao{" + "cod_touro=" + cod_touro + '}';
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 37 * hash + Objects.hashCode(this.codigo);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Inseminacao other = (Inseminacao) obj;
+        if (!Objects.equals(this.codigo, other.codigo)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
     
 }

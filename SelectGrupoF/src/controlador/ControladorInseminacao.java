@@ -30,7 +30,7 @@ public class ControladorInseminacao {
         objeto.setSituacao(Integer.parseInt(man.jtfSituacao.getText()));
         objeto.setObservo(man.jtfObservo.getText());
         objeto.setDatap(LocalDate.parse(man.jtfDatap.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-        objeto.setCod_touro(Integer.parseInt(man.jtfCod_touro.getText()));
+        objeto.setCod_touro((Touro)man.jcbCod_touro.getSelectedItem());
         
         
         
@@ -54,7 +54,7 @@ man.dispose();//fechar a tela da manutenção
         objeto.setSituacao(Integer.parseInt(man.jtfSituacao.getText()));
         objeto.setObservo(man.jtfObservo.getText());
         objeto.setDatap(LocalDate.parse(man.jtfDatap.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-        objeto.setCod_touro(Integer.parseInt(man.jtfCod_touro.getText()));
+        objeto.setCod_touro((Touro)man.jcbCod_touro.getSelectedItem());
         
         
         boolean resultado = DaoInseminacao.alterar(objeto);
@@ -116,11 +116,16 @@ public static void atualizarTabela(JTable tabela) {
         man.jtfSituacao.setText(objeto.getSituacao().toString());
         man.jtfObservo.setText(objeto.getObservo());
         man.jtfDatap.setText(objeto.getDatap().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-        man.jtfCod_touro.setText(objeto.getCod_touro().toString());
+        man.jcbCod_touro.setSelectedItem(objeto.getCod_touro());
         
         
         
         man.jtfCodigo.setEnabled(false); //desabilitando o campo código
         man.btnAdicionar.setEnabled(false); //desabilitando o botão adicionar
     }
+    
+    public static void atualizaComboCod_touro(ManutencaoInseminacao man) {
+        DefaultComboBoxModel defaultComboBoxModel = new DefaultComboBoxModel(DaoInseminacao.consultar().toArray());
+        man.jcbCod_touro.setModel(defaultComboBoxModel);
+}
 }

@@ -21,6 +21,7 @@ public ListagemProducao listagem;
         jtfCodigo.setEnabled(false);  //desabilitando a edição do campo código
         btnAlterar.setEnabled(false); //desabilitando o botão alterar
         btnExcluir.setEnabled(false); //desabilitando o botão excluir
+        controlador.ControladorProducao.atualizaComboCod_pessoa(this);
         
   }
  public ManutencaoProducao(java.awt.Frame parent, boolean modal, ListagemProducao listagem, int pk) {
@@ -29,6 +30,7 @@ public ListagemProducao listagem;
         
         jtfCodigo.setEnabled(false);  //desabilitando a edição do campo código
         this.listagem = listagem;
+        controlador.ControladorProducao.atualizaComboCod_pessoa(this);
         controlador.ControladorProducao.atualizaCampos(this, pk);//pegando os valores do BD e colocando na tela
     }
     /**
@@ -37,6 +39,7 @@ public ListagemProducao listagem;
     public ManutencaoProducao(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        controlador.ControladorProducao.atualizaComboCod_pessoa(this);
     }
 
     /**
@@ -49,7 +52,6 @@ public ListagemProducao listagem;
     private void initComponents() {
 
         jLabel4 = new javax.swing.JLabel();
-        jtfcodpessoa = new javax.swing.JTextField();
         jtfCodigo = new javax.swing.JTextField();
         jtfTurno = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
@@ -60,11 +62,12 @@ public ListagemProducao listagem;
         jLabel1 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jtfObs = new javax.swing.JTextField();
+        jtfObse = new javax.swing.JTextField();
         btnAdicionar = new javax.swing.JButton();
         btnAlterar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
+        jcbCod_pessoa = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -102,9 +105,9 @@ public ListagemProducao listagem;
         jLabel3.setForeground(new java.awt.Color(0, 153, 153));
         jLabel3.setText("Código");
 
-        jtfObs.addActionListener(new java.awt.event.ActionListener() {
+        jtfObse.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtfObsActionPerformed(evt);
+                jtfObseActionPerformed(evt);
             }
         });
 
@@ -143,6 +146,8 @@ public ListagemProducao listagem;
             }
         });
 
+        jcbCod_pessoa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -168,8 +173,8 @@ public ListagemProducao listagem;
                             .addComponent(jtfData)
                             .addComponent(jtfTurno)
                             .addComponent(jtfCodigo)
-                            .addComponent(jtfcodpessoa, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
-                            .addComponent(jtfObs)))
+                            .addComponent(jtfObse)
+                            .addComponent(jcbCod_pessoa, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnAdicionar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -205,11 +210,11 @@ public ListagemProducao listagem;
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jtfObs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jtfObse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(jtfcodpessoa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jcbCod_pessoa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAdicionar)
@@ -226,9 +231,9 @@ public ListagemProducao listagem;
         // TODO add your handling code here:
     }//GEN-LAST:event_jtfTotalActionPerformed
 
-    private void jtfObsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfObsActionPerformed
+    private void jtfObseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfObseActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtfObsActionPerformed
+    }//GEN-LAST:event_jtfObseActionPerformed
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
 controlador.ControladorProducao.inserir(this);        // TODO add your handling code here:
@@ -296,11 +301,11 @@ controlador.ControladorProducao.excluir(this);        // TODO add your handling 
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    public javax.swing.JComboBox<String> jcbCod_pessoa;
     public javax.swing.JTextField jtfCodigo;
     public javax.swing.JTextField jtfData;
-    public javax.swing.JTextField jtfObs;
+    public javax.swing.JTextField jtfObse;
     public javax.swing.JTextField jtfTotal;
     public javax.swing.JTextField jtfTurno;
-    public javax.swing.JTextField jtfcodpessoa;
     // End of variables declaration//GEN-END:variables
 }

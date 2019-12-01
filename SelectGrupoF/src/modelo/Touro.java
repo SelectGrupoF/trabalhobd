@@ -5,6 +5,8 @@
  */
 package modelo;
 
+import java.util.Objects;
+
 /**
  *
  * @author Evelin
@@ -12,7 +14,7 @@ package modelo;
 public class Touro {
     private Integer codigo;
     private String nome;
-    private Integer cod_raca;
+    private Raca cod_raca;
 
     public Integer getCodigo() {
         return codigo;
@@ -28,13 +30,14 @@ public class Touro {
 
     public void setNome(String nome) {
         this.nome = nome;
+           
     }
 
-    public Integer getCod_raca() {
+    public Raca getCod_raca() {
         return cod_raca;
     }
 
-    public void setCod_raca(Integer cod_raca) {
+    public void setCod_raca(Raca cod_raca) {
         this.cod_raca = cod_raca;
     }
 
@@ -43,4 +46,30 @@ public class Touro {
         return  nome;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 53 * hash + Objects.hashCode(this.codigo);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Touro other = (Touro) obj;
+        if (!Objects.equals(this.codigo, other.codigo)) {
+            return false;
+        }
+        return true;
+    }
+
+    
 }

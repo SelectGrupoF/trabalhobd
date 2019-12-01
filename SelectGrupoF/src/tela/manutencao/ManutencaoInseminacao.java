@@ -22,6 +22,7 @@ public ManutencaoInseminacao(java.awt.Frame parent, boolean modal, ListagemInsem
         jtfCodigo.setEnabled(false);  //desabilitando a edição do campo código
         btnAlterar.setEnabled(false); //desabilitando o botão alterar
         btnExcluir.setEnabled(false); //desabilitando o botão excluir
+        controlador.ControladorInseminacao.atualizaComboCod_touro(this); //no construtor com 3 parâmetros adicionar antes do atualizarCampos
   }
 
  public ManutencaoInseminacao(java.awt.Frame parent, boolean modal, ListagemInseminacao listagem, int pk) {
@@ -30,7 +31,9 @@ public ManutencaoInseminacao(java.awt.Frame parent, boolean modal, ListagemInsem
         
         jtfCodigo.setEnabled(false);  //desabilitando a edição do campo código
         this.listagem = listagem;
+        controlador.ControladorInseminacao.atualizaComboCod_touro(this);
         controlador.ControladorInseminacao.atualizaCampos(this, pk);//pegando os valores do BD e colocando na tela
+        
     }
 
 
@@ -38,6 +41,7 @@ public ManutencaoInseminacao(java.awt.Frame parent, boolean modal, ListagemInsem
     public ManutencaoInseminacao(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        controlador.ControladorInseminacao.atualizaComboCod_touro(this);
     }
 
     /**
@@ -61,11 +65,11 @@ public ManutencaoInseminacao(java.awt.Frame parent, boolean modal, ListagemInsem
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jtfDatap = new javax.swing.JTextField();
-        jtfCod_touro = new javax.swing.JTextField();
         btnAdicionar = new javax.swing.JButton();
         btnAlterar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
+        jcbCod_touro = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -103,12 +107,6 @@ public ManutencaoInseminacao(java.awt.Frame parent, boolean modal, ListagemInsem
         jLabel7.setForeground(new java.awt.Color(0, 153, 153));
         jLabel7.setText("Código do Touro");
 
-        jtfCod_touro.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtfCod_touroActionPerformed(evt);
-            }
-        });
-
         btnAdicionar.setBackground(new java.awt.Color(0, 153, 153));
         btnAdicionar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnAdicionar.setForeground(new java.awt.Color(255, 255, 255));
@@ -144,6 +142,8 @@ public ManutencaoInseminacao(java.awt.Frame parent, boolean modal, ListagemInsem
             }
         });
 
+        jcbCod_touro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -158,7 +158,10 @@ public ManutencaoInseminacao(java.awt.Frame parent, boolean modal, ListagemInsem
                                 .addGap(7, 7, 7)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel6)
-                                    .addComponent(jLabel7)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel7)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jcbCod_touro, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(jLabel5)
                                     .addComponent(jLabel2)
                                     .addComponent(jLabel4)
@@ -178,8 +181,7 @@ public ManutencaoInseminacao(java.awt.Frame parent, boolean modal, ListagemInsem
                             .addComponent(jtfDatai, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jtfSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jtfObservo, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtfDatap, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtfCod_touro, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jtfDatap, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -210,7 +212,7 @@ public ManutencaoInseminacao(java.awt.Frame parent, boolean modal, ListagemInsem
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(jtfCod_touro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jcbCod_touro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(42, 42, 42)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAdicionar)
@@ -226,10 +228,6 @@ public ManutencaoInseminacao(java.awt.Frame parent, boolean modal, ListagemInsem
     private void jtfDataiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfDataiActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtfDataiActionPerformed
-
-    private void jtfCod_touroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfCod_touroActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtfCod_touroActionPerformed
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
 controlador.ControladorInseminacao.inserir(this);        // TODO add your handling code here:
@@ -297,7 +295,7 @@ controlador.ControladorInseminacao.excluir(this);         // TODO add your handl
     public javax.swing.JLabel jLabel5;
     public javax.swing.JLabel jLabel6;
     public javax.swing.JLabel jLabel7;
-    public javax.swing.JTextField jtfCod_touro;
+    public javax.swing.JComboBox<String> jcbCod_touro;
     public javax.swing.JTextField jtfCodigo;
     public javax.swing.JTextField jtfDatai;
     public javax.swing.JTextField jtfDatap;

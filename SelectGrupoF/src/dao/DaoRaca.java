@@ -94,7 +94,7 @@ public class DaoRaca {
 }
     public static Raca consultar(int primaryKey) {
         //editar o SQL conforme a entidade
-        String sql = "SELECT codigo, nome, senha, usuario, email FROM pessoa WHERE codigo=?";
+        String sql = "SELECT codigo, nome FROM raca WHERE codigo=?";
         PreparedStatement ps;
         try {
             ps = conexao.Conexao.getConexao().prepareStatement(sql);

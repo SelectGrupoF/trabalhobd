@@ -22,7 +22,7 @@ import java.util.List;
  */
 public class DaoInseminacao {
     public static boolean inserir(Inseminacao objeto) {
-        String sql = "INSERT INTO inseinacao (codigo, datai, situacao, observo, datap, cod_touro) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO inseminacao (codigo, datai, situacao, observo, datap, cod_touro) VALUES (?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement ps = conexao.Conexao.getConexao().prepareStatement(sql);
             ps.setInt(1, objeto.getCodigo());
@@ -30,7 +30,7 @@ public class DaoInseminacao {
             ps.setInt(3, objeto.getSituacao());
             ps.setString(4, objeto.getObservo());
             ps.setDate(5, Date.valueOf(objeto.getDatap())); //fazer a seguinte importação: java.sql.Date 
-            ps.setInt(6, objeto.getCod_touro());
+            ps.setInt(6, objeto.getCod_touro().getCodigo());
             
             ps.executeUpdate();
             return true;
@@ -46,7 +46,9 @@ public class DaoInseminacao {
         objeto.setSituacao(1);
         objeto.setObservo("Luiza");
         objeto.setDatap(LocalDate.parse("11/01/1988", DateTimeFormatter.ofPattern("dd/MM/yyyy"))); //fazer as seguintes importações: java.time.format.DateTimeFormatter e java.time.LocalDate
-        objeto.setCod_touro(1);
+        Touro novoObj = new Touro();
+novoObj.setCodigo(2); //deve ser um valor de chave primária que já está cadastrado no BD
+objeto.setCod_touro(novoObj);
         
         boolean resultado = inserir(objeto);
         if (resultado) {
@@ -63,7 +65,7 @@ public class DaoInseminacao {
             ps.setInt(2, objeto.getSituacao());
             ps.setString(3, objeto.getObservo());
             ps.setDate(4, Date.valueOf(objeto.getDatap())); //fazer a seguinte importação: java.sql.Date 
-            ps.setInt(5, objeto.getCod_touro());
+            ps.setInt(5, objeto.getCod_touro().getCodigo());
             ps.executeUpdate();
             return true;
         } catch (SQLException | ClassNotFoundException ex) {
@@ -99,7 +101,7 @@ public class DaoInseminacao {
                 objeto.setSituacao(rs.getInt("situacao"));
                 objeto.setObservo(rs.getString("observo"));
                 objeto.setDatap(rs.getDate("datap").toLocalDate());
-                objeto.setCod_touro(rs.getInt("cod_touro"));
+                objeto.setCod_touro(DaoTouro.consultar(rs.getInt("cod_touro"))); //tem que importar DaoTipoProduto
                 
                 resultados.add(objeto);//não mexa nesse, ele adiciona o objeto na lista
             }
@@ -125,7 +127,7 @@ public class DaoInseminacao {
                 objeto.setSituacao(rs.getInt("situacao"));
                 objeto.setObservo(rs.getString("observo"));
                 objeto.setDatap(rs.getDate("datap").toLocalDate());
-                objeto.setCod_touro(rs.getInt("cod_touro"));
+                objeto.setCod_touro(DaoTouro.consultar(rs.getInt("cod_touro")));
                 return objeto;//não mexa nesse, ele adiciona o objeto na lista
             }
         } catch (SQLException | ClassNotFoundException ex) {

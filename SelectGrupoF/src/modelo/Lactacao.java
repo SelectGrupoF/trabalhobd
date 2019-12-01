@@ -6,6 +6,7 @@
 package modelo;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  *
@@ -52,6 +53,31 @@ public class Lactacao {
     @Override
     public String toString() {
         return "ControladorLactacao{" + "obser=" + obser + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 59 * hash + Objects.hashCode(this.codigo);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Lactacao other = (Lactacao) obj;
+        if (!Objects.equals(this.codigo, other.codigo)) {
+            return false;
+        }
+        return true;
     }
     
     

@@ -56,6 +56,7 @@ public class DaoManejo {
             PreparedStatement ps = conexao.Conexao.getConexao().prepareStatement(sql);
             ps.setString(1, objeto.getObs());
             ps.setDate(2, Date.valueOf(objeto.getDatas())); //fazer a seguinte importação: java.sql.Date 
+            ps.setInt(3, objeto.getCodigo());
             
            
             ps.executeUpdate();

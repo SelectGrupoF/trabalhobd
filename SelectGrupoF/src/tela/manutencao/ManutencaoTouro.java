@@ -23,6 +23,7 @@ public class ManutencaoTouro extends javax.swing.JDialog {
         jtfCodigo.setEnabled(false);  //desabilitando a edição do campo código
         btnAlterar.setEnabled(false); //desabilitando o botão alterar
         btnExcluir.setEnabled(false); //desabilitando o botão excluir
+        controlador.ControladorTouro.atualizaComboCod_raca(this); //no construtor com 3 parâmetros adicionar antes do atualizarCampos
   }
 
   public ManutencaoTouro(java.awt.Frame parent, boolean modal, ListagemTouro listagem, int pk) {
@@ -32,10 +33,12 @@ public class ManutencaoTouro extends javax.swing.JDialog {
         jtfCodigo.setEnabled(false);  //desabilitando a edição do campo código
         this.listagem = listagem;
         controlador.ControladorTouro.atualizaCampos(this, pk);//pegando os valores do BD e colocando na tela
+        controlador.ControladorTouro.atualizaComboCod_raca(this); //no construtor com 3 parâmetros adicionar antes do atualizarCampos
     }
     public ManutencaoTouro(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        controlador.ControladorTouro.atualizaComboCod_raca(this); //no construtor com 3 parâmetros adicionar antes do atualizarCampos
     }
 
     /**
@@ -58,7 +61,7 @@ public class ManutencaoTouro extends javax.swing.JDialog {
         jButton3 = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        jtfCod_raca = new javax.swing.JTextField();
+        jcbCod_raca = new javax.swing.JComboBox<>();
 
         jLabel2.setText("jLabel2");
 
@@ -121,11 +124,7 @@ public class ManutencaoTouro extends javax.swing.JDialog {
         jLabel5.setForeground(new java.awt.Color(0, 153, 153));
         jLabel5.setText("Código da Raça");
 
-        jtfCod_raca.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtfCod_racaActionPerformed(evt);
-            }
-        });
+        jcbCod_raca.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -140,10 +139,10 @@ public class ManutencaoTouro extends javax.swing.JDialog {
                             .addComponent(jLabel3)
                             .addComponent(jLabel5))
                         .addGap(54, 54, 54)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jtfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtfNome, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtfCod_raca, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jtfCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
+                            .addComponent(jtfNome, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
+                            .addComponent(jcbCod_raca, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnAdicionar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -171,17 +170,17 @@ public class ManutencaoTouro extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jtfNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(11, 11, 11)
+                .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jtfCod_raca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jcbCod_raca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAdicionar)
                     .addComponent(btnAlterar)
                     .addComponent(jButton3)
                     .addComponent(btnExcluir))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -190,10 +189,6 @@ public class ManutencaoTouro extends javax.swing.JDialog {
     private void jtfNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfNomeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtfNomeActionPerformed
-
-    private void jtfCod_racaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfCod_racaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtfCod_racaActionPerformed
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
 controlador.ControladorTouro.inserir(this);        // TODO add your handling code here:
@@ -260,7 +255,7 @@ controlador.ControladorTouro.excluir(this);        // TODO add your handling cod
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    public javax.swing.JTextField jtfCod_raca;
+    public javax.swing.JComboBox<String> jcbCod_raca;
     public javax.swing.JTextField jtfCodigo;
     public javax.swing.JTextField jtfNome;
     // End of variables declaration//GEN-END:variables

@@ -30,7 +30,11 @@ public class ControladorVaca{
         objeto.setOrigem(Integer.parseInt(man.jtfOrigem.getText()));
         objeto.setNascimento(LocalDate.parse(man.jtfNascimento.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy")));
         objeto.setObserva(man.jtfObserva.getText());
-        
+        objeto.setCod_raca((Raca)man.jcbCod_raca.getSelectedItem());
+        objeto.setCod_lac((Lactacao)man.jcbCod_lac.getSelectedItem());
+        objeto.setCod_leite((Leite)man.jcbCod_leite.getSelectedItem());
+        objeto.setCod_ins((Inseminacao)man.jcbCod_ins.getSelectedItem());
+        objeto.setCod_mae((Vaca)man.jcbCod_mae.getSelectedItem());
         
         boolean resultado = DaoVaca.inserir(objeto);
         if (resultado) {
@@ -52,6 +56,11 @@ man.dispose();//fechar a tela da manutenção
         objeto.setOrigem(Integer.parseInt(man.jtfOrigem.getText()));
         objeto.setNascimento(LocalDate.parse(man.jtfNascimento.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy")));
         objeto.setObserva(man.jtfObserva.getText());
+        objeto.setCod_raca((Raca)man.jcbCod_raca.getSelectedItem());
+        objeto.setCod_lac((Lactacao)man.jcbCod_lac.getSelectedItem());
+        objeto.setCod_leite((Leite)man.jcbCod_leite.getSelectedItem());
+        objeto.setCod_ins((Inseminacao)man.jcbCod_ins.getSelectedItem());
+        objeto.setCod_mae((Vaca)man.jcbCod_mae.getSelectedItem());
         
         boolean resultado = DaoVaca.alterar(objeto);
         if (resultado) {
@@ -88,6 +97,12 @@ public static void atualizarTabela(JTable tabela) {
         modelo.addColumn("Origem");
         modelo.addColumn("Nascimento");
         modelo.addColumn("Observação");
+        modelo.addColumn("Código da Raça");
+        modelo.addColumn("Código da Lactação");
+        modelo.addColumn("Código da produção");
+        modelo.addColumn("Código da Inseminação");
+        modelo.addColumn("Código da Mãe");
+        
         
         List<Vaca> resultados = DaoVaca.consultar();
         for (Vaca objeto : resultados) {
@@ -99,6 +114,11 @@ public static void atualizarTabela(JTable tabela) {
             linha.add(objeto.getOrigem());
             linha.add(objeto.getNascimento().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
             linha.add(objeto.getObserva());
+            linha.add(objeto.getCod_raca());
+            linha.add(objeto.getCod_lac());
+            linha.add(objeto.getCod_leite());
+            linha.add(objeto.getCod_ins());
+            linha.add(objeto.getCod_mae());
             
             modelo.addRow(linha); //adicionando a linha na tabela
         }
@@ -113,8 +133,28 @@ public static void atualizarTabela(JTable tabela) {
         man.jtfOrigem.setText(objeto.getOrigem().toString());
         man.jtfObserva.setText(objeto.getObserva());
         
-        
         man.jtfBrinco.setEnabled(false); //desabilitando o campo código
         man.btnAdicionar.setEnabled(false); //desabilitando o botão adicionar
     }
-}
+    
+        public static void atualizaComboCod_raca(ManutencaoVaca man) {
+        DefaultComboBoxModel defaultComboBoxModel = new DefaultComboBoxModel(DaoVaca.consultar().toArray());
+        man.jcbCod_raca.setModel(defaultComboBoxModel);
+        }
+        public static void atualizaComboCod_lac(ManutencaoLactacao man) {
+        DefaultComboBoxModel defaultComboBoxModel = new DefaultComboBoxModel(DaoLactacao.consultar().toArray());
+        man.jcbCod_lac.setModel(defaultComboBoxModel);
+        }
+        public static void atualizaComboCod_leite(ManutencaoProducao man) {
+        DefaultComboBoxModel defaultComboBoxModel = new DefaultComboBoxModel(DaoProducao.consultar().toArray());
+        man.jcbCod_leite.setModel(defaultComboBoxModel);
+        }
+        public static void atualizaComboCod_ins(ManutencaoInseminacao man) {
+        DefaultComboBoxModel defaultComboBoxModel = new DefaultComboBoxModel(DaoTipoProduto.consultar().toArray());
+        man.jcbCod_ins.setModel(defaultComboBoxModel);
+        }
+        public static void atualizaComboCod_vaca(ManutencaoVaca man) {
+        DefaultComboBoxModel defaultComboBoxModel = new DefaultComboBoxModel(DaoTipoProduto.consultar().toArray());
+        man.jcbCod_mae.setModel(defaultComboBoxModel);
+        }
+       

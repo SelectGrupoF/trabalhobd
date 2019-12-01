@@ -29,11 +29,12 @@ public class DaoVaca {
             ps.setInt(3, objeto.getOrigem());
             ps.setDate(4, Date.valueOf(objeto.getNascimento()));
             ps.setString(5, objeto.getObserva());
-            ps.setInt(6, objeto.getCod_raca());
-            ps.setInt(7, objeto.getCod_lac());
-            ps.setInt(8, objeto.getCod_leite());
-            ps.setInt(9, objeto.getCod_ins());
-            ps.setInt(10, objeto.getCod_mae());
+            ps.setInt(6, objeto.getCod_raca().getCodigo());
+            ps.setInt(7, objeto.getCod_lac().getCodigo());
+            ps.setInt(8, objeto.getCod_leite().getCodigo());
+            ps.setInt(9, objeto.getCod_ins().getCodigo());
+            ps.setInt(10, objeto.getCod_mae().getBrinco());
+            
             
             ps.executeUpdate();
             return true;
@@ -48,9 +49,7 @@ public class DaoVaca {
         objeto.setSituacao(1);
         objeto.setOrigem(1);
         objeto.setNascimento(LocalDate.parse("11/01/1988", DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-        objeto.setObserva("a");
-       
-        
+        objeto.setObserva("a");   
         
         boolean resultado = inserir(objeto);
         if (resultado) {
@@ -68,6 +67,11 @@ public class DaoVaca {
             ps.setDate(3, Date.valueOf(objeto.getNascimento()));
             ps.setString(4, objeto.getObserva());
             ps.setInt(5, objeto.getBrinco());
+            ps.setInt(6, objeto.getCod_raca().getCodigo());
+            ps.setInt(7, objeto.getCod_lac().getCodigo());
+            ps.setInt(8, objeto.getCod_leite().getCodigo());
+            ps.setInt(9, objeto.getCod_ins().getCodigo());
+            ps.setInt(10, objeto.getCod_mae().getBrinco());
             ps.executeUpdate();
             return true;
         } catch (SQLException | ClassNotFoundException ex) {
@@ -76,7 +80,7 @@ public class DaoVaca {
         }
     }
      public static boolean excluir(Vaca objeto) {
-        String sql = "DELETE FROM producao WHERE codigo=?";
+        String sql = "DELETE FROM vaca WHERE brinco=?";
         try {
             PreparedStatement ps = conexao.Conexao.getConexao().prepareStatement(sql);
             ps.setInt(1, objeto.getBrinco());
@@ -103,6 +107,11 @@ public class DaoVaca {
                 objeto.setOrigem(rs.getInt("origem"));
                 objeto.setNascimento(rs.getDate("nascimento").toLocalDate());
                 objeto.setObserva(rs.getString("observa"));
+                objeto.setCod_raca(DaoRaca.consultar(rs.getInt("cod_raca"))); //tem que importar DaoTipoProduto
+                objeto.setCod_lac(DaoLactacao.consultar(rs.getInt("cod_lac"))); //tem que importar DaoTipoProduto
+                objeto.setCod_leite(DaoProducao.consultar(rs.getInt("cod_leite"))); //tem que importar DaoTipoProduto
+                objeto.setCod_ins(DaoInseminacao.consultar(rs.getInt("cod_ins"))); //tem que importar DaoTipoProduto
+                objeto.setCod_mae(DaoVaca.consultar(rs.getInt("cod_vaca"))); //tem que importar DaoTipoProduto
                 
                 resultados.add(objeto);//não mexa nesse, ele adiciona o objeto na lista
             }
@@ -128,6 +137,11 @@ public class DaoVaca {
                 objeto.setOrigem(rs.getInt("origem"));
                 objeto.setNascimento(rs.getDate("nascimento").toLocalDate());
                 objeto.setObserva(rs.getString("observa"));
+                objeto.setCod_raca(DaoRaca.consultar(rs.getInt("cod_raca"))); //tem que importar DaoTipoProduto
+                objeto.setCod_lac(DaoLactacao.consultar(rs.getInt("cod_lac"))); //tem que importar DaoTipoProduto
+                objeto.setCod_leite(DaoProducao.consultar(rs.getInt("cod_leite"))); //tem que importar DaoTipoProduto
+                objeto.setCod_ins(DaoInseminacao.consultar(rs.getInt("cod_ins"))); //tem que importar DaoTipoProduto
+                objeto.setCod_mae(DaoVaca.consultar(rs.getInt("cod_vaca"))); //tem que importar DaoTipoProduto
                 
                 return objeto;//não mexa nesse, ele adiciona o objeto na lista
             }
