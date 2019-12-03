@@ -7,7 +7,7 @@ package modelo;
 
 /**
  *
- * @author Avell
+ * @author eve
  */
 public class Touro {
     private Integer codigo;

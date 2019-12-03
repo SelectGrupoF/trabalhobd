@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 /**
  *
- * @author Avell
+ * @author eve
  */
 public class DaoRaca {
      public static boolean inserir(Raca objeto) {

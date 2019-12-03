@@ -15,7 +15,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 /**
  *
- * @author Avell
+ * @author eve
  */
 public class ControladorPessoa {
         public static void inserir(ManutencaoPessoa man){

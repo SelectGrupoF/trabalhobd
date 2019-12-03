@@ -28,7 +28,7 @@ import modelo.Touro;
 import modelo.Vaca;
 /**
  *
- * @author Avell
+ * @author eve
  */
 public class ControladorInseminacao {
         public static void inserir(ManutencaoInseminacao man){

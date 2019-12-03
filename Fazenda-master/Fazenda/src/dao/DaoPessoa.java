@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 /**
  *
- * @author Avell
+ * @author eve
  */
 public class DaoPessoa {
      public static boolean inserir(Pessoa objeto) {

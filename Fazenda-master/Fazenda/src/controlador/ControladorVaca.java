@@ -20,7 +20,7 @@ import javax.swing.table.DefaultTableModel;
 import modelo.Raca;
 /**
  *
- * @author Avell
+ * @author eve
  */
 public class ControladorVaca {
         public static void inserir(ManutencaoVaca man){

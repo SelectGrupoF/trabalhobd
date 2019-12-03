@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 /**
  *
- * @author Avell
+ * @author eve
  */
 public class Lactacao {
     private Integer codigo;

@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 /**
  *
- * @author Avell
+ * @author eve
  */
 public class Manejo {
     private Integer codigo;

@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 /**
  *
- * @author Avell
+ * @author eve
  */
 public class DaoVaca {
      public static boolean inserir(Vaca objeto) {
