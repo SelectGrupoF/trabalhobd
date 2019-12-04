@@ -63,7 +63,7 @@
                                   <Component id="jtfCodigo" alignment="0" max="32767" attributes="0"/>
                                   <Component id="jtfObservacao" alignment="0" max="32767" attributes="0"/>
                                   <Component id="jtfFim" alignment="0" min="-2" pref="295" max="-2" attributes="0"/>
-                                  <Component id="comVaca" min="-2" max="-2" attributes="0"/>
+                                  <Component id="comVaca" alignment="0" min="-2" pref="175" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
